@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'home/style.css' %}">
+  <link rel="stylesheet" href="{% static 'home/table.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
+	{% if title %}
+		<title>Director's Portal - {{ title }}</title>
+	{% else %}
+		<title>Director's Portal</title>
+	{% endif %}	
+</head>
+<body>
+
+	<!-- header -->
+	
+ 	<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    	<a href="{% url 'home' %}" class="navbar-brand" style="margin-left: 50px;">Director's Portal</a>
+      <div class="container">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+      	<ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+            </li>
+        </ul>
+          <ul class="navbar-nav justify-content-end">
+            
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  {% if user.avatar %}
+                    <img src="{{ user.avatar }}" class="rounded-circle align-self-center mr-2" style="width: 32px;">
+                  {% else %}
+                    <i class="far fa-user-circle fa-lg rounded-circle align-self-center mr-2" style="width: 32px;"></i>
+                  {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                	<p class="dropdown-item-text text-muted mb-0">Welcome</p>
+                  <h5 class="dropdown-item-text mb-0">{{ request.user.username }}</h5>
+                  
+                  <div class="dropdown-divider"></div>
+                  <a href="{% url 'logout' %}" class="dropdown-item">Sign Out</a>
+                </div>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+	</header> 
+	<!-- /header -->
+	<!-- navbar -->
+	{% if user.is_authenticated %}
+		
+			<nav id="sidebar" class="" style="
+    position:fixed;
+    ">
+				
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url({% static 'home/bg_1.jpg' %});">
+	  			<div class="user-logo">
+            
+	  				<div class="img" style="background-image: url({% static 'home/logo.jpg' %});"></div>
+	  				
+            <!-- <h3></h3> -->
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li class="{% if request.resolver_match.view_name == 'home' %} active{% endif %}">
+            <a href="{% url 'home' %}"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li class="{% if request.resolver_match.view_name == 'internal_letter_form' %} active{% endif %}">
+            <a href="{% url 'internal_letter_form' %}"><i class="fas fa-plus mr-3"></i>Add Internal Entry</a>
+          </li>
+          
+          <li class="{% if request.resolver_match.view_name == 'external_letter_form' %} active{% endif %}">
+            <a href="{% url 'external_letter_form' %}"><i class="fas fa-plus mr-3"></i>Add External Entry</a>
+          </li>
+         
+          <li class="{% if request.resolver_match.view_name == 'files_referred' %} active{% endif %}">
+             <a href="{% url 'files_referred' %}"><i class="fa fa-file mr-3" aria-hidden="true"></i>Files Referred to Me</a>
+          </li>
+
+          <li>
+             <a href="#"><i class="fas fa-address-book mr-3"></i>Contact Me</a>
+          </li>
+        </ul>
+
+    	</nav>
+
+{% endif %}
+	<!-- /navbar -->
+	
+
+{% if messages %}
+ <div>
+  	
+    <div >
+    	
+    		{% for message in messages %}
+    			<div class="alert alert-{{ message.tags }}">
+    				{{ message }}
+    			</div>
+    		{% endfor %}
+    	
+      
+    </div>
+    
+  </div> 
+  {% endif %}
+	
+
+	
+{% block content %}{% endblock %}
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/602c9782ac.js" crossorigin="anonymous"></script>
+
+<script src="{% static 'home/table.js' %}"></script>
+   
+
+</body>
+</html>

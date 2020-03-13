@@ -1,0 +1,103 @@
+{% extends "home/layout.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+
+	<div class ='container' style="margin-left: 340px;">
+		<div class="cards-list">
+  
+		<div class="card 1">
+		  <div class="card_image"> <img src="{% static 'home/graph-background.jpg' %}" /> </div>
+		  <div class="card_title title-white">
+		  	<h2 style="color: white">{{ ifile.count }}</h2>
+		    <p>My Internal Files</p>
+		  </div>
+		</div>
+
+		<div class="card 1">
+		  <div class="card_image"> <img src="{% static 'home/graph-background.jpg' %}" /> </div>
+		  <div class="card_title title-white">
+		  	<h2 style="color: white">{{ efile.count }}</h2>
+		    <p>My External Files</p>
+		  </div>
+		</div>
+		</div>
+		<h1 class="text-center" style="margin-top: 100px;">External Letters</h1>
+<table id="tdtd" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">S_no.
+
+      </th>
+      <th class="th-sm">From
+
+      </th>
+      <th class="th-sm">Subject
+
+      </th>
+      <th class="th-sm">Edit
+
+      </th>
+      <th class="th-sm">Details</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    {% if efile %}
+		  
+		    {% for external_letter in efile %}
+		    <tr>
+		      <td>{{external_letter.si_no}}</td>
+		      <td>{{external_letter.get_From_display}}</td>
+		      <td>{{external_letter.subject}}</td>
+		      <td><a href="{% url 'edit_external' external_letter.id %}">Edit</a></td>
+		      <td><a href="{% url 'detail_external' external_letter.id %}">Details</a></td>
+		    </tr>
+		    {% endfor %}	  
+		{% else %}
+		    <tr><th colspan="4">No External Letters found</th></tr>
+		{% endif %}
+    </tbody> 
+  
+</table>
+
+<h1 class="text-center" style="margin-top: 100px;">Internal Letters</h1>
+<table id="tdtd1" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">S_no.
+
+      </th>
+      <th class="th-sm">In_date
+      </th>
+      <th class="th-sm">Doc_type
+
+      </th>
+      <th class="th-sm">Edit
+
+      </th>
+      <th class="th-sm">Details</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    {% if ifile %}
+	    {% for internal_letter in ifile %}
+	    <tr>
+	      <td>{{internal_letter.si_no}}</td>
+	      <td>{{internal_letter.in_date}}</td>
+	      <td>{{internal_letter.get_doc_type_display}}</td>
+	      <td><a href="{% url 'edit_internal' internal_letter.id %}">Edit</a></td>
+	      <td><a href="{% url 'detail_internal' internal_letter.id %}">Details</a></td>
+	    </tr>
+	    {% endfor %}
+	    {% else %}
+	    <tr><th colspan="4">No Internal Letters found</th></tr>
+	    {% endif %}
+	  </tbody>
+  
+</table>
+
+	</div>
+
+{% endblock %}

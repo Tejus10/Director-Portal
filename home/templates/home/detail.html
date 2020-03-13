@@ -1,0 +1,37 @@
+{% extends "home/layout.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+	<div class ='container jumbotron' style="margin-left: 340px;">
+		<h1 class="text-center">Letter Details</h1>
+		  <table class='table'>
+		  <thead>
+		    <tr>
+		           
+		      <th>From</th>
+		      <th>Referred To</th>
+		      <th>Modified on date</th>
+		      <th>Modified on time</th>
+		      <th>Remark</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		{% if out %}
+		  
+		    {% for external_letter in out %}
+		    <tr>
+		      <td>{{external_letter.fro}}</td>
+		      <td>{{external_letter.to}}</td>
+		      <td>{{external_letter.dated}}</td>
+		      <td>{{external_letter.time}}</td>
+		      <td>{{external_letter.comment}}</td>
+
+		    </tr>
+		    {% endfor %}	  
+		{% else %}
+		    <tr><th colspan="4">No Details found</th></tr>
+		{% endif %}
+			</tbody> 
+		  </table>
+		</div>
+{% endblock content %}		
